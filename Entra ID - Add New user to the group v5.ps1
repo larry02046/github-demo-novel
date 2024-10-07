@@ -18,7 +18,7 @@ catch {
 
 # Define the timeframe for newly created users (e.g., last 1 day)
 
-$timeframe = (Get-Date).AddDays(-15)
+$timeframe = (Get-Date).AddDays(-1)
 Write-Host "Retrieving users created after $timeframe"
 
 # Get users created in the last 1 days
