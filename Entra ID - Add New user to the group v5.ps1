@@ -18,12 +18,12 @@ catch {
 
 # Define the timeframe for newly created users (e.g., last 1 day)
 
-$timeframe = (Get-Date).AddDays(-1)
+$timeframe = (Get-Date).AddDays(-10)
 Write-Host "Retrieving users created after $timeframe"
 
 # Get users created in the last 1 days
 
-$newUsers = Get-MgUser -Filter "accountEnabled eq true and OnPremisesSyncEnabled ne true and createdDateTime ge $($timeframe.ToString('yyyy-MM-ddTHH:mm:ssZ'))" -Property Displayname, UserPrincipalName, Id -ConsistencyLevel eventual -CountVariable CountVar | Select-Object DisplayName, UserPrincipalName, Id
+$newUsers = Get-MgUser -Filter "accountEnabled eq true and OnPremisesSyncEnabled ne true and employeeid ne null and Not startswith(userprincipalname,'ACOE_') and createdDateTime ge $($timeframe.ToString('yyyy-MM-ddTHH:mm:ssZ'))" -Property Displayname, UserPrincipalName, Id -ConsistencyLevel eventual -CountVariable CountVar | Select-Object DisplayName, UserPrincipalName, Id
 
 if ($newUsers.Count -gt 0) 
 {
@@ -65,4 +65,3 @@ foreach ($user in $newUsers) {
 }
 
 Stop-Transcript
-
